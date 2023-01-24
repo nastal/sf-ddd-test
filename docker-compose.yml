@@ -33,17 +33,17 @@ services:
             - '.:/app'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
 
-    #php-consumer:
-    #    build: phpdocker/php-fpm
-    #    working_dir: /app
-    #    volumes:
-    #        - '.:/app'
-    #        - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
-    #    command: [ "php", "bin/console", "messenger:consume", "async", "--limit=10" ]
-    #    depends_on:
-    #        - php-fpm
-    #        - rabbitmq
-    #    restart: always
+    php-consumer:
+        build: phpdocker/php-fpm
+        working_dir: /app
+        volumes:
+            - '.:/app'
+            - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
+        command: [ "php", "bin/console", "messenger:consume", "async", "--limit=10" ]
+        depends_on:
+            - php-fpm
+            - rabbitmq
+        restart: always
 
     rabbitmq:
         container_name: sunfinance-verif-rabbitmq
