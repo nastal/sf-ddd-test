@@ -4,10 +4,13 @@ WORKDIR "/app"
 RUN apt-get update; \
     apt-get -y --no-install-recommends install \
         git \
+        librabbitmq-dev \
         php8.2-intl \
         php8.2-amqp \
         php8.2-ds \
         php8.2-pgsql \
+        && pecl install amqp \
+        && docker-php-ext-enable amqp \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 

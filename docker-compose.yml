@@ -39,7 +39,7 @@ services:
         volumes:
             - '.:/app'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
-        command: [ "php", "bin/console", "messenger:consume", "async", "--limit=10" ]
+        command: [ "symfony", "console", "messenger:consume", "async", "--limit=10" ]
         depends_on:
             - php-fpm
             - rabbitmq
