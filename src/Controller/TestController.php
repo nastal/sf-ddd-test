@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use PhpParser\ErrorHandler\Throwing;
-use Psr\Log\LoggerInterface;
+use App\Message\CheckQueueTestMessage;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,10 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
     #[Route('/test', name: 'app_test')]
-    public function index(LoggerInterface $logger): JsonResponse
+    public function index(MessageBusInterface $bus): JsonResponse
     {
 
-        $logger->info('hello worlddd');
+        $bus->dispatch(new CheckQueueTestMessage('Look! I created a message!'));
 
         return $this->json([
             'message' => 'Welcome to your new controller!',
