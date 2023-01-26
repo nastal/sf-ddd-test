@@ -46,7 +46,7 @@ services:
         restart: always
 
     rabbitmq:
-        container_name: sunfinance-verif-rabbitmq
+        container_name: verif-rabbitmq
         image: 'rabbitmq:3.10.5-management'
         restart: unless-stopped
         ports:
