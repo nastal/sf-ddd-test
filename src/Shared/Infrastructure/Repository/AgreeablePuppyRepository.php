@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Repository;
+namespace App\Shared\Infrastructure\Repository;
 
-use Application\Entity\AgreeablePuppy;
+use App\Shared\Domain\Entity\AgreeablePuppy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

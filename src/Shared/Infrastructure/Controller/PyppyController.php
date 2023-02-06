@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Controller;
+namespace App\Shared\Infrastructure\Controller;
 
-use Application\Entity\AgreeablePuppy;
+use App\Shared\Domain\Entity\AgreeablePuppy;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
