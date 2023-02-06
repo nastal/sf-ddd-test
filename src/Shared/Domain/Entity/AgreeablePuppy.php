@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Entity;
+namespace App\Shared\Domain\Entity;
 
-use Application\Repository\AgreeablePuppyRepository;
+use App\Shared\Infrastructure\Repository\AgreeablePuppyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AgreeablePuppyRepository::class)]
