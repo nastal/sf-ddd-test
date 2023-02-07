@@ -3,3 +3,10 @@ controllers:
         path: ../src/Shared/Infrastructure/Controller
         namespace: App\Shared\Infrastructure\Controller
     type: attribute
+
+verification_create:
+    resource:
+        path: ../src/Verification/UI/HTTP
+        namespace: App\Verification\UI\HTTP
+        methods: [ POST ]
+    type: attribute

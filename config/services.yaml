@@ -25,3 +25,6 @@ services:
     #App\MessageHandler\CheckQueueTestMessageHandler:
     #    arguments:
     #        - '@monolog.logger'
+    App\Verification\Infrastructure\VerificationRepository:
+        tags:
+            - { name: doctrine.repository_service }
