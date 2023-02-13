@@ -11,6 +11,7 @@ framework:
 
         routing:
             # Route your messages to the transports
+            'App\Verification\Application\CreateVerificationCommandHandler': async
 
 # when@test:
 #    framework:

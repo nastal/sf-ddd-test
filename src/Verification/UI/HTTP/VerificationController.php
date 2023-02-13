@@ -2,42 +2,39 @@
 
 namespace App\Verification\UI\HTTP;
 
-use App\Shared\Domain\Entity\AgreeablePuppy;
-use App\Verification\Domain\Entity\Subject;
-use App\Verification\Domain\Entity\Verification;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Verification\Application\CreateVerificationCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Verification\Infrastructure\VerificationRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class VerificationController extends AbstractController
 {
+    public function __construct(
+        private readonly MessageBusInterface $messageBus
+    )
+    {
+    }
 
     #[Route('/verification', name: 'verification', methods: ['POST'])]
-    public function create(Request $request, ManagerRegistry $doctrine): JsonResponse
+    public function create(Request $request): JsonResponse
     {
-        $entityManager = $doctrine->getManager();
+        //todo validate request
+        $content = json_decode($request->getContent(), true)['subject'];
+        $command = new CreateVerificationCommand(
+            $content['identity'],
+            $content['type'],
+            $request->headers->get('User-Agent')
+        );
 
-        $parametersAsArray = json_decode($request->getContent(), true);
-        dd($parametersAsArray);
-        //todo validate parameters or use DTO
-
-        $subjectIdentity = new Subject();
-
-        /*$verificationEntity = new Verification(
-
-        )*/
-
-        $verificationRepository = new VerificationRepository($doctrine);
-        $verificationRepository->create();
-
-        $entityManager->persist($verificationRepository);
-        $entityManager->flush();
+        $this->messageBus->dispatch($command);
 
         return $this->json([
-            'ss' => 'ss'
+            'identity' => $content['identity'],
+            'type' => $content['type'],
+            'ip' => $request->getClientIp(),
+            'userAgent' => $request->headers->get('User-Agent'),
         ]);
     }
 }

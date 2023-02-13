@@ -16,6 +16,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Shared/Domain/Entity'
                 prefix: 'App\Shared\Domain\Entity'
                 alias: App
+            App\Verification\Infrastructure\Doctrine\Entity:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Verification/Infrastructure/Doctrine/Entity'
+                prefix: 'App\Verification\Infrastructure\Doctrine\Entity'
+                alias: DoctrineVerification
 
 when@test:
     doctrine:

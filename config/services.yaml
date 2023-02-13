@@ -25,6 +25,10 @@ services:
     #App\MessageHandler\CheckQueueTestMessageHandler:
     #    arguments:
     #        - '@monolog.logger'
-    App\Verification\Infrastructure\VerificationRepository:
+    App\Verification\Infrastructure\Doctrine\Repository\VerificationRepository:
         tags:
             - { name: doctrine.repository_service }
+
+    doctrine.orm.metadata.annotation_reader:
+        class: Doctrine\Common\Annotations\AnnotationReader
+        public: false

@@ -2,27 +2,23 @@
 
 namespace App\Verification\Domain\Entity;
 use App\Shared\Domain\Service\UlidService;
+use Ramsey\Uuid\Uuid;
 
 class Verification
 {
-    private int $id;
+    private string $uuid;
     private Subject $subject;
-    private Type $type;
     private Code $code;
     private bool $confirmed = false;
     private UserFingerprint $userFingerprint;
 
     public function __construct(Subject $subject, bool $confirmed = false, Code $code, UserFingerprint $userFingerprint)
     {
-        $this->id = UlidService::generate();
+        $this->uuid = UlidService::generate();
         $this->subject = $subject;
         $this->confirmed = $confirmed;
         $this->code = $code;
         $this->userFingerprint = $userFingerprint;
-    }
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getSubject(): Subject
@@ -30,9 +26,14 @@ class Verification
         return $this->subject;
     }
 
+    public function getIdentity(): string
+    {
+        return $this->subject->getIdentity();
+    }
+
     public function getType(): Type
     {
-        return $this->type;
+        return $this->getSubject()->getType();
     }
 
     public function getCode(): Code
@@ -50,9 +51,14 @@ class Verification
         return $this->userFingerprint;
     }
 
-    public function setCofirmed(bool $confirmed): self
+    public function setConfirmed(bool $confirmed): self
     {
         $this->confirmed = $confirmed;
         return $this;
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }

@@ -3,14 +3,14 @@
 namespace App\Verification\Application;
 
 use App\Shared\Application\Command\CommandInterface;
-use App\Verification\Domain\Entity\Type;
 
 class CreateVerificationCommand implements CommandInterface
 {
 
     public function __construct(
         public readonly string $identity,
-        public readonly string $type
+        public readonly string $type,
+        public readonly string $userFingerprint
     )
     {
     }
@@ -18,6 +18,21 @@ class CreateVerificationCommand implements CommandInterface
     public function getCommandName(): string
     {
         return __CLASS__;
+    }
+
+    public function getIdentity(): string
+    {
+        return $this->identity;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function getUserFingerprint(): string
+    {
+        return $this->userFingerprint;
     }
 
 
