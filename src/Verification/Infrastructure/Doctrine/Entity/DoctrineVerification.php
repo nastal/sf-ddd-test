@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: VerificationRepository::class)]
+#[ORM\Table(name: 'verification')]
 class DoctrineVerification
 {
     #[ORM\Id]
