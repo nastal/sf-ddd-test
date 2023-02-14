@@ -32,8 +32,7 @@ final class Version20230206205526 extends AbstractMigration
         $table->addColumn('user_fingerprint', 'string', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['uuid']);
-        $table->addIndex(['identity']);
-        $table->addIndex(['type']);
+        $table->addUniqueIndex(['identity', 'type']);
     }
 
     public function postUp(Schema $schema): void

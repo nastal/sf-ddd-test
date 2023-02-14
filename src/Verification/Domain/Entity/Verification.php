@@ -12,7 +12,7 @@ class Verification
     private bool $confirmed = false;
     private UserFingerprint $userFingerprint;
 
-    public function __construct(Subject $subject, bool $confirmed = false, Code $code, UserFingerprint $userFingerprint)
+    public function __construct(Subject $subject, Code $code, UserFingerprint $userFingerprint, bool $confirmed = false)
     {
         $this->uuid = UlidService::generate();
         $this->subject = $subject;

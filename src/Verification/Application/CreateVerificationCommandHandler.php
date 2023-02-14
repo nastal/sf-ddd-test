@@ -27,7 +27,6 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
     {
         $verification = new Verification(
             new Subject($command->getIdentity(), Type::from($command->getType())),
-            false,
             new Code(random_int(1000000, 9999999)),
             new UserFingerprint($command->getUserFingerprint())
         );
