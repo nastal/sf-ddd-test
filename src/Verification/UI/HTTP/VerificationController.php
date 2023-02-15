@@ -28,13 +28,11 @@ class VerificationController extends AbstractController
             $request->headers->get('User-Agent')
         );
 
-        $this->messageBus->dispatch($command);
-
-        /*try {
+        try {
             $this->messageBus->dispatch($command); //sync
         } catch (\Exception $e) {
             return $this->json(['message' => $e->getMessage()], 400);
-        }*/
+        }
 
         return $this->json([
             'identity' => $content['identity'],
