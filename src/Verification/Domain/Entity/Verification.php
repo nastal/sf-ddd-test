@@ -2,7 +2,6 @@
 
 namespace App\Verification\Domain\Entity;
 use App\Shared\Domain\Service\UlidService;
-use Ramsey\Uuid\Uuid;
 
 class Verification
 {

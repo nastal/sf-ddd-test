@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Verification\Application;
+namespace App\Verification\Application\Command;
 
 use App\Shared\Application\Command\CommandHandlerInterface;
 use App\Shared\Application\Command\CommandInterface;
@@ -9,8 +9,9 @@ use App\Verification\Domain\Entity\Subject;
 use App\Verification\Domain\Entity\Type;
 use App\Verification\Domain\Entity\UserFingerprint;
 use App\Verification\Domain\Entity\Verification;
+use App\Verification\Domain\Event\VerificationCreatedEvent;
 use App\Verification\Domain\Service\VerificationService;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -18,7 +19,7 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly VerificationService $verificationService,
-        private readonly LoggerInterface $logger
+        private readonly EventDispatcherInterface $eventDispatcher
     )
     {
     }
@@ -31,6 +32,10 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
             new UserFingerprint($command->getUserFingerprint())
         );
 
-        $this->verificationService->createVerification($verification, true);
+        $this->verificationService->createVerification($verification);
+
+        //fixme last id
+        $this->eventDispatcher->dispatch(new VerificationCreatedEvent('last_created_uuid'));
+
     }
 }

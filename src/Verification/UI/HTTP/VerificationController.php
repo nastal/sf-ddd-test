@@ -2,7 +2,7 @@
 
 namespace App\Verification\UI\HTTP;
 
-use App\Verification\Application\CreateVerificationCommand;
+use App\Verification\Application\Command\CreateVerificationCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,11 +30,17 @@ class VerificationController extends AbstractController
 
         $this->messageBus->dispatch($command);
 
+        /*try {
+            $this->messageBus->dispatch($command); //sync
+        } catch (\Exception $e) {
+            return $this->json(['message' => $e->getMessage()], 400);
+        }*/
+
         return $this->json([
             'identity' => $content['identity'],
             'type' => $content['type'],
             'ip' => $request->getClientIp(),
             'userAgent' => $request->headers->get('User-Agent'),
-        ]);
+        ], 201);
     }
 }

@@ -1,4 +1,5 @@
 [Learning curve on DDD and Symfony:
+https://github.com/salletti/symfony-ddd-example
 https://github.com/k0t9i/TaskManager
 https://github.com/nealio82/absolute-beginners-guide-to-ddd-with-symfony
 https://github.com/CodelyTV/php-ddd-example

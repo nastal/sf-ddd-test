@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Verification\Application;
+namespace App\Verification\Application\Command;
 
 use App\Shared\Application\Command\CommandInterface;
 

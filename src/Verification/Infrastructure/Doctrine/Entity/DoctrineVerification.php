@@ -3,7 +3,6 @@
 namespace App\Verification\Infrastructure\Doctrine\Entity;
 
 use App\Verification\Infrastructure\Doctrine\Repository\VerificationRepository;
-use Container1Oy3axm\getDoctrine_UlidGeneratorService;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 

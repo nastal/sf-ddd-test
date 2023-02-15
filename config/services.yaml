@@ -32,3 +32,9 @@ services:
     doctrine.orm.metadata.annotation_reader:
         class: Doctrine\Common\Annotations\AnnotationReader
         public: false
+
+    App\Verification\Infrastructure\EventSubscriber\VerificationCreatedMessageProducer:
+        arguments:
+            $messageBus: '@messenger.bus.default'
+        tags:
+            - { name: kernel.event_subscriber }
