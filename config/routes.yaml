@@ -10,3 +10,10 @@ verification_create:
         namespace: App\Verification\UI\HTTP
         methods: [ POST ]
     type: attribute
+
+template_render:
+    resource:
+        path: ../src/Template/UI/HTTP
+        namespace: App\Template\UI\HTTP
+        methods: [ POST ]
+    type: attribute

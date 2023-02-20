@@ -4,4 +4,5 @@ doctrine_migrations:
         # as migrations classes should NOT be autoloaded
         'DoctrineMigrations': '%kernel.project_dir%/migrations'
         'App\Verification\Infrastructure\Doctrine\Migrations': '%kernel.project_dir%/src/Verification/Infrastructure/Doctrine/Migrations'
+        'App\Template\Infrastructure\Doctrine\Migrations': '%kernel.project_dir%/src/Template/Infrastructure/Doctrine/Migrations'
     enable_profiler: false

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Verification\Domain\Entity;
+namespace App\Shared\Domain\Entity;
 
 enum Type: string
 {

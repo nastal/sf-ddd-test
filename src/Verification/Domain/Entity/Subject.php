@@ -2,6 +2,8 @@
 
 namespace App\Verification\Domain\Entity;
 
+use App\Shared\Domain\Entity\Type;
+
 class Subject
 {
     private ?int $id = null;

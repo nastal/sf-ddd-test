@@ -4,9 +4,9 @@ namespace App\Verification\Application\Command;
 
 use App\Shared\Application\Command\CommandHandlerInterface;
 use App\Shared\Application\Command\CommandInterface;
+use App\Shared\Domain\Entity\Type;
 use App\Verification\Domain\Entity\Code;
 use App\Verification\Domain\Entity\Subject;
-use App\Verification\Domain\Entity\Type;
 use App\Verification\Domain\Entity\UserFingerprint;
 use App\Verification\Domain\Entity\Verification;
 use App\Verification\Domain\Event\VerificationCreatedEvent;

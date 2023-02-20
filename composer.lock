@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4194f07760ae9b82d58775f300b5be2e",
+    "content-hash": "c726791f55b3763aee2b241157903a08",
     "packages": [
         {
             "name": "brick/math",
@@ -4959,6 +4959,98 @@
                 }
             ],
             "time": "2022-12-14T16:11:27+00:00"
+        },
+        {
+            "name": "yceruto/ddd-maker-bundle",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yceruto/ddd-maker-bundle.git",
+                "reference": "685ec48ced8727e3f572f734d180d4d53bf0cc04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yceruto/ddd-maker-bundle/zipball/685ec48ced8727e3f572f734d180d4d53bf0cc04",
+                "reference": "685ec48ced8727e3f572f734d180d4d53bf0cc04",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.4",
+                "symfony/console": "^5.4|^6.0",
+                "symfony/framework-bundle": "^5.4|^6.0",
+                "symfony/maker-bundle": "^1.36",
+                "yceruto/micro-symfony": "^1.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Yceruto\\DddMakerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yonel Ceruto",
+                    "email": "yonelceruto@gmail.com"
+                }
+            ],
+            "description": "Domain-Driven Design Maker for Symfony applications",
+            "homepage": "https://github.com/yceruto/ddd-maker-bundle",
+            "support": {
+                "issues": "https://github.com/yceruto/ddd-maker-bundle/issues",
+                "source": "https://github.com/yceruto/ddd-maker-bundle/tree/v1.3.1"
+            },
+            "time": "2022-05-18T03:56:55+00:00"
+        },
+        {
+            "name": "yceruto/micro-symfony",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yceruto/micro-symfony.git",
+                "reference": "c047792f85de88479663e8e36a4ae7d948535c05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yceruto/micro-symfony/zipball/c047792f85de88479663e8e36a4ae7d948535c05",
+                "reference": "c047792f85de88479663e8e36a4ae7d948535c05",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "symfony/config": "^5.4||^6.0",
+                "symfony/dependency-injection": "^5.4||^6.0",
+                "symfony/http-kernel": "^5.4||^6.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MicroSymfony\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yonel Ceruto",
+                    "email": "yonelceruto@gmail.com"
+                }
+            ],
+            "description": "Micro-Symfony Tools",
+            "support": {
+                "issues": "https://github.com/yceruto/micro-symfony/issues",
+                "source": "https://github.com/yceruto/micro-symfony/tree/v1.2.1"
+            },
+            "time": "2022-05-22T21:31:49+00:00"
         }
     ],
     "packages-dev": [],
