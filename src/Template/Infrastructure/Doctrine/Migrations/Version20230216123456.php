@@ -21,6 +21,7 @@ final class Version20230216123456 extends AbstractMigration
 
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('slug', 'string', ['length' => 255]);
+        $table->addColumn('content_type', 'string', ['length' => 255]);
         $table->addColumn('content', 'text');
         $table->setPrimaryKey(['id']);
         $table->addIndex(['slug']);
@@ -31,10 +32,10 @@ final class Version20230216123456 extends AbstractMigration
         $conn = $this->connection;
 
         // Insert email-verification entity
-        $conn->exec("INSERT INTO templates (slug, content) VALUES ('email-verification', '<!DOCTYPE html><html><head><title>Email verification</title><style>.content {margin: auto;width: 600px;}</style></head><body><div class=\"content\"><p>Your verification code is {{ code }}.</p></div></body></html>')");
+        $conn->exec("INSERT INTO templates (slug, content_type, content) VALUES ('email-verification', 'text/html', '<!DOCTYPE html><html><head><title>Email verification</title><style>.content {margin: auto;width: 600px;}</style></head><body><div class=\"content\"><p>Your verification code is {{ code }}.</p></div></body></html>')");
 
         // Insert sms-verification entity
-        $conn->exec("INSERT INTO templates (slug, content) VALUES ('sms-verification', 'Your verification code is {{ code }}.')");
+        $conn->exec("INSERT INTO templates (slug, content_type, content) VALUES ('sms-verification', 'text/plain', 'Your verification code is {{ code }}.')");
     }
 
     public function down(Schema $schema) : void

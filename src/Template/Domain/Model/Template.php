@@ -4,21 +4,14 @@ declare(strict_types=1);
 
 namespace App\Template\Domain\Model;
 
-
-use App\Shared\Domain\Entity\Type;
-use App\Shared\Domain\Service\UlidService;
-
 class Template
 {
-    protected string $uuid;
 
     protected Content $content;
+    protected Slug $slug;
 
-    protected Type $slug;
-
-    private function __construct(Content $content, Type $slug)
+    public function __construct(Content $content, Slug $slug)
     {
-        $this->uuid = UlidService::generate();
         $this->content = $content;
         $this->slug = $slug;
     }
@@ -28,7 +21,7 @@ class Template
         return $this->content;
     }
 
-    public function getSlug(): Type
+    public function getSlug(): Slug
     {
         return $this->slug;
     }

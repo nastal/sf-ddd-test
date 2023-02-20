@@ -18,7 +18,6 @@ class Content
 
     public function renderCode(string $code): string
     {
-        //fixme use regex or twig
         return str_replace('{{ code }}', $code, $this->value);
     }
 

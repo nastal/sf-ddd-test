@@ -17,6 +17,9 @@ class DoctrineTemplate
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $content_type = null;
+
     #[ORM\Column(type: 'text')]
     private ?string $content = null;
 
@@ -44,6 +47,17 @@ class DoctrineTemplate
     public function setContent(string $content): self
     {
         $this->content = $content;
+        return $this;
+    }
+
+    public function getContentType(): ?string
+    {
+        return $this->content_type;
+    }
+
+    public function setContentType(string $content_type): self
+    {
+        $this->content_type = $content_type;
         return $this;
     }
 
