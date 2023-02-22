@@ -52,3 +52,15 @@ services:
         ports:
             - "5672:5672"
             - "15672:15672"
+
+    gotify:
+        image: gotify/server:latest
+        container_name: gotify-server
+        restart: unless-stopped
+        ports:
+            - "64002:80"
+        environment:
+            GOTIFY_DB_DIALECT: "sqlite3"
+            GOTIFY_DB_CONNECTION_STRING: "/app/data/gotify.db"
+            GOTIFY_DEFAULTUSER_PASS: "admin"
+            GOTIFY_DEFAULTUSER_NAME: "admin"

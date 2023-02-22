@@ -25,8 +25,6 @@ class CreateNotificationCommandHandler
     public function __invoke(CreateNotificationCommand $command): void
     {
 
-        $this->logger->info('HANDLER INVOKED');
-
         $NotificationChannel = $this->notificationChannelMapper
             ->mapSlugToTemplate($command->getSlug());
 
