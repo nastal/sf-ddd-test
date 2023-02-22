@@ -3,7 +3,7 @@
 namespace App\Verification\Infrastructure\Doctrine\Repository;
 
 use App\Verification\Domain\Repository\VerificationRepositoryInterface;
-use App\Verification\Domain\Entity\Verification;
+use App\Verification\Domain\Aggregate\Verification;
 use App\Verification\Infrastructure\Doctrine\Entity\DoctrineVerification;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,7 +39,7 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
 
     }
 
-    public function findBySubjectIdentity(string $identity): ?\App\Verification\Domain\Entity\Verification
+    public function findBySubjectIdentity(string $identity): ?Verification
     {
         return $this->entityManager->getRepository(DoctrineVerification::class)->findOneBy([
             'identity' => $identity

@@ -8,6 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class VerificationCreatedEvent extends Event
 {
     protected \DateTimeImmutable $occur;
+
+    //fixme construct Verification to Dispatcher
     public function __construct(private readonly string $verificationUuid)
     {
         $this->occur = new \DateTimeImmutable();

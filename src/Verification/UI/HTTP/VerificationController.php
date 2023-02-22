@@ -31,7 +31,7 @@ class VerificationController extends AbstractController
         try {
             $this->messageBus->dispatch($command); //sync
         } catch (\Exception $e) {
-            return $this->json(['message' => $e->getMessage()], 400);
+            return $this->json(['message' => $e->getMessage()], 409);
         }
 
         return $this->json([

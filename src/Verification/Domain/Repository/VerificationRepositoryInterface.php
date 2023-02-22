@@ -2,7 +2,7 @@
 
 namespace App\Verification\Domain\Repository;
 
-use App\Verification\Domain\Entity\Verification;
+use App\Verification\Domain\Aggregate\Verification;
 
 interface VerificationRepositoryInterface
 {

@@ -3,11 +3,12 @@
 namespace App\Notification\Infrastructure\Doctrine\Repository;
 
 use App\Notification\Domain\Aggregate\Notification;
+use App\Notification\Domain\Repository\NotificationRepositoryInterface;
 use App\Notification\Infrastructure\Doctrine\Entity\DoctrineNotification;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class NotificationRepository extends ServiceEntityRepository
+class NotificationRepository extends ServiceEntityRepository implements NotificationRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -18,14 +19,14 @@ class NotificationRepository extends ServiceEntityRepository
     {
         $doctrineNotification = new DoctrineNotification(
             $notification->getid(),
-            $notification->getChannel(),
+            $notification->getChannel()->getName(),
             $notification->getBody(),
         );
         $this->_em->persist($doctrineNotification);
         $this->_em->flush();
     }
 
-    public function markAsDispatched(Notification $notification): void
+    public function dispatch(Notification $notification): void
     {
         $notification->setDispatched(true);
         $this->_em->flush();

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Verification\Domain\Entity;
+namespace App\Verification\Domain\Aggregate;
+
 use App\Shared\Domain\Entity\Type;
 use App\Shared\Domain\Service\UlidService;
 

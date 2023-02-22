@@ -13,6 +13,7 @@ framework:
             # Route your messages to the transports
             'App\Verification\Application\Command\CreateVerificationCommand': sync
             'App\Verification\Domain\Event\VerificationCreatedEvent': async
+            'App\Notification\Application\Command\CreateNotificationCommand': async
 
 # when@test:
 #    framework:

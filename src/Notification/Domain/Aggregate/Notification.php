@@ -12,13 +12,13 @@ class Notification
 
     private string $recipient;
 
-    private string $channel;
+    private Channel $channel;
 
     private string $body;
 
     private bool $dispatched = false;
 
-    public function __construct(string $recipient, string $channel, string $body)
+    public function __construct(string $recipient, Channel $channel, string $body)
     {
         $this->recipient = $recipient;
         $this->channel = $channel;
@@ -35,7 +35,7 @@ class Notification
         return $this->recipient;
     }
 
-    public function getChannel(): string
+    public function getChannel(): Channel
     {
         return $this->channel;
     }

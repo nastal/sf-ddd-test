@@ -2,6 +2,9 @@
 
 namespace App\Notification\Domain\Service;
 
+use App\Notification\Domain\Aggregate\Notification;
+use App\Notification\Domain\Repository\NotificationRepositoryInterface;
+
 class NotificationService
 {
     public function __construct(
@@ -9,10 +12,8 @@ class NotificationService
     ) {
     }
 
-    public function createNotification(CreateNotificationCommand $command): void
+    public function createNotification(Notification $notification): void
     {
-        //todo invariants
-        $notification = new Notification($command->getNotificationId());
         $this->notificationRepository->save($notification);
     }
 }

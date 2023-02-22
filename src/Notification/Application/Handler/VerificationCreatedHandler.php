@@ -2,22 +2,22 @@
 
 namespace App\Notification\Application\Handler;
 
+use App\Notification\Application\Command\CreateNotificationCommand;
 use App\Verification\Domain\Event\VerificationCreatedEvent;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
 readonly class VerificationCreatedHandler
 {
 
-    public function __construct(private LoggerInterface $logger)
+    public function __construct(private readonly MessageBusInterface $messageBus
+    )
     {
     }
 
-
     public function __invoke(VerificationCreatedEvent $event): void
     {
-        //fixme remove
-        $this->logger->log('info', 'verification event handled');
+        $this->messageBus->dispatch(new CreateNotificationCommand('someId'));
     }
 }

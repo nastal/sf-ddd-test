@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Verification\Domain\Entity;
+namespace App\Verification\Domain\Aggregate;
 
 class UserFingerprint
 {

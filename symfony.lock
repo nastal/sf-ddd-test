@@ -126,8 +126,5 @@
         "files": [
             "config/packages/uid.yaml"
         ]
-    },
-    "yceruto/ddd-maker-bundle": {
-        "version": "v1.3.1"
     }
 }

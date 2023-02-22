@@ -2,7 +2,7 @@
 
 namespace App\Verification\Domain\Service;
 
-use App\Verification\Domain\Entity\Verification;
+use App\Verification\Domain\Aggregate\Verification;
 use App\Verification\Domain\Repository\VerificationRepositoryInterface;
 
 class VerificationService
@@ -15,6 +15,11 @@ class VerificationService
     public function createVerification(Verification $verification): void
     {
         //todo invariants
-        $this->verificationRepository->save($verification);
+        try {
+            $this->verificationRepository->save($verification);
+        } catch (\Exception $e) {
+            throw new \Exception('Verification already exists');
+        }
+
     }
 }
