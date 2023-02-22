@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Verification\Application\Handler;
+namespace App\Notification\Application\Handler;
 
 use App\Verification\Domain\Event\VerificationCreatedEvent;
 use Psr\Log\LoggerInterface;

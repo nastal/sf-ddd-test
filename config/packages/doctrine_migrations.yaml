@@ -5,4 +5,5 @@ doctrine_migrations:
         'DoctrineMigrations': '%kernel.project_dir%/migrations'
         'App\Verification\Infrastructure\Doctrine\Migrations': '%kernel.project_dir%/src/Verification/Infrastructure/Doctrine/Migrations'
         'App\Template\Infrastructure\Doctrine\Migrations': '%kernel.project_dir%/src/Template/Infrastructure/Doctrine/Migrations'
+        'App\Notification\Infrastructure\Doctrine\Migrations': '%kernel.project_dir%/src/Notification/Infrastructure/Doctrine/Migrations'
     enable_profiler: false

@@ -26,6 +26,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Template/Infrastructure/Doctrine/Entity'
                 prefix: 'App\Template\Infrastructure\Doctrine\Entity'
                 alias: DoctrineTemplate
+            App\Notification\Infrastructure\Doctrine\Entity:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Notification/Infrastructure/Doctrine/Entity'
+                prefix: 'App\Notification\Infrastructure\Doctrine\Entity'
+                alias: DoctrineNotification
 
 when@test:
     doctrine:

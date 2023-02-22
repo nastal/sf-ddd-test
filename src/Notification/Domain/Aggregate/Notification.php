@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Notification\Domain\Aggregate;
+
+
+
+class Notification
+{
+
+    private ?int $id = null;
+
+
+    private string $recipient;
+
+    private string $channel;
+
+    private string $body;
+
+    private bool $dispatched = false;
+
+    public function __construct(string $recipient, string $channel, string $body)
+    {
+        $this->recipient = $recipient;
+        $this->channel = $channel;
+        $this->body = $body;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getRecipient(): string
+    {
+        return $this->recipient;
+    }
+
+    public function getChannel(): string
+    {
+        return $this->channel;
+    }
+
+    public function getBody(): string
+    {
+        return $this->body;
+    }
+
+    public function isDispatched(): bool
+    {
+        return $this->dispatched;
+    }
+
+    public function setDispatched(bool $dispatched): void
+    {
+        $this->dispatched = $dispatched;
+    }
+}
