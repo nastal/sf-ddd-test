@@ -5,7 +5,9 @@ namespace App\Notification\Application\Command;
 class CreateNotificationCommand
 {
     public function __construct(
-        public readonly string $notificationId,
+        public readonly string $code,
+        public readonly string $identity,
+        public readonly string $slug,
     )
     {
     }
@@ -15,8 +17,18 @@ class CreateNotificationCommand
         return __CLASS__;
     }
 
-    public function getNotificationId(): string
+    public function getCode(): string
     {
-        return $this->notificationId;
+        return $this->code;
+    }
+
+    public function getIdentity(): string
+    {
+        return $this->identity;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 }

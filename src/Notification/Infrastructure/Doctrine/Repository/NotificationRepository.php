@@ -18,7 +18,7 @@ class NotificationRepository extends ServiceEntityRepository implements Notifica
     public function save(Notification $notification): void
     {
         $doctrineNotification = new DoctrineNotification(
-            $notification->getid(),
+            $notification->getRecipient(),
             $notification->getChannel()->getName(),
             $notification->getBody(),
         );

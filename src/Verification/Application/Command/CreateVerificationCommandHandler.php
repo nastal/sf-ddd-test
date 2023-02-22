@@ -34,8 +34,7 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
 
         $this->verificationService->createVerification($verification);
 
-        //fixme pass correct id
-        $this->eventDispatcher->dispatch(new VerificationCreatedEvent('last_created_uuid'));
+        $this->eventDispatcher->dispatch(new VerificationCreatedEvent($verification));
 
     }
 }

@@ -18,6 +18,10 @@ readonly class VerificationCreatedHandler
 
     public function __invoke(VerificationCreatedEvent $event): void
     {
-        $this->messageBus->dispatch(new CreateNotificationCommand('someId'));
+        $this->messageBus->dispatch(new CreateNotificationCommand(
+            $event->getCode(),
+            $event->getIdentity(),
+            $event->getType()
+        ));
     }
 }
