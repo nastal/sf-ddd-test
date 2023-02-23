@@ -33,6 +33,9 @@ class DoctrineVerification
     #[ORM\Column]
     private ?string $userFingerprint = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +104,17 @@ class DoctrineVerification
     public function setUserFingerprint(string $userFingerprint): self
     {
         $this->userFingerprint = $userFingerprint;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
         return $this;
     }
 

@@ -13,6 +13,9 @@ class Verification
     private bool $confirmed = false;
     private UserFingerprint $userFingerprint;
 
+    //created at property
+    private \DateTimeImmutable $createdAt;
+
     public function __construct(Subject $subject, Code $code, UserFingerprint $userFingerprint, bool $confirmed = false)
     {
         $this->uuid = UlidService::generate();
@@ -20,6 +23,7 @@ class Verification
         $this->confirmed = $confirmed;
         $this->code = $code;
         $this->userFingerprint = $userFingerprint;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getSubject(): Subject
@@ -61,5 +65,16 @@ class Verification
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+        return $this;
     }
 }

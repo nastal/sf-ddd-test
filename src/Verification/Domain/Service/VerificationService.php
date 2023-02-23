@@ -14,12 +14,23 @@ class VerificationService
 
     public function createVerification(Verification $verification): void
     {
-        //todo invariants
+
+        //It must not be possible to create a duplicated "pending" verification for the same subject.
+        if($this->activePendingVerification($verification)) {
+            throw new \DomainException('Pending verification exists');
+        }
+
         try {
             $this->verificationRepository->save($verification);
         } catch (\Exception $e) {
-            throw new \Exception('Verification already exists');
+            throw new \Exception('Verification cant be created');
         }
 
+    }
+
+    public function activePendingVerification(Verification $verification): bool
+    {
+        $verification = $this->verificationRepository->findPendingIdentity($verification->getSubject()->getIdentity());
+        return count($verification) > 0;
     }
 }

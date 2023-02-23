@@ -2,6 +2,10 @@
 
 namespace App\Verification\Infrastructure\Doctrine\Repository;
 
+use App\Shared\Domain\Entity\Type;
+use App\Verification\Domain\Aggregate\Code;
+use App\Verification\Domain\Aggregate\Subject;
+use App\Verification\Domain\Aggregate\UserFingerprint;
 use App\Verification\Domain\Repository\VerificationRepositoryInterface;
 use App\Verification\Domain\Aggregate\Verification;
 use App\Verification\Infrastructure\Doctrine\Entity\DoctrineVerification;
@@ -13,7 +17,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  *
  * @method DoctrineVerification|null find($id, $lockMode = null, $lockVersion = null)
  * @method DoctrineVerification|null findOneBy(array $criteria, array $orderBy = null)
- * @method DoctrineVerification[]    findAll()
+ * @method DoctrineVerification[]    findAll(array $criteria, array $orderBy = null)
  * @method DoctrineVerification[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class VerificationRepository extends ServiceEntityRepository implements VerificationRepositoryInterface
@@ -32,17 +36,24 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
         $doctrineVerification->setIdentity($entity->getIdentity());
         $doctrineVerification->setConfirmed($entity->isConfirmed());
         $doctrineVerification->setUuid($entity->getUuid());
-
+        $doctrineVerification->setCreatedAt($entity->getCreatedAt());
 
         $this->getEntityManager()->persist($doctrineVerification);
         $this->getEntityManager()->flush();
 
     }
 
-    public function findBySubjectIdentity(string $identity): ?Verification
+    public function findPendingIdentity(string $identity): ?array
     {
-        return $this->entityManager->getRepository(DoctrineVerification::class)->findOneBy([
-            'identity' => $identity
-        ]);
+        $expirationTime = new \DateTimeImmutable('-5 minutes');
+
+        $qb = $this->createQueryBuilder('v')
+            ->where('v.identity = :identity')
+            ->andWhere('v.confirmed = false')
+            ->andWhere('v.createdAt >= :expirationTime')
+            ->setParameter('identity', $identity)
+            ->setParameter('expirationTime', $expirationTime);
+
+        return $qb->getQuery()->getResult();
     }
 }

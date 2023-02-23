@@ -8,3 +8,6 @@ A lot of articles on DDD and Symfony consumed using Google.
 
 Eric Evans - Domain Driven Design... Sorry, no)) Have not read it yet. But I will.
 ]()
+
+
+create app within gotify and replace token in .env file

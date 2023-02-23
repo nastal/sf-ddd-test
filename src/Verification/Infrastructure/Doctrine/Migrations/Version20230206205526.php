@@ -28,15 +28,15 @@ final class Version20230206205526 extends AbstractMigration
         $table->addColumn('confirmed', 'boolean', ['notnull' => false]);
         $table->addColumn('code', 'integer', ['notnull' => false]);
         $table->addColumn('user_fingerprint', 'string', ['notnull' => false]);
+        $table->addColumn('created_at', 'datetime', ['notnull' => true, 'default' => 'CURRENT_TIMESTAMP']);
         $table->setPrimaryKey(['id']);
-        $table->addIndex(['uuid']);
-        $table->addUniqueIndex(['identity', 'type']);
+        $table->addIndex(['identity', 'type']);
     }
 
     public function postUp(Schema $schema): void
     {
         $conn = $this->connection;
-        $conn->exec("INSERT INTO verification (uuid, type, identity, confirmed, code, user_fingerprint) VALUES ('". Uuid::uuid5(Uuid::NAMESPACE_OID, UlidService::generate())."', 'email', 'test@test.com', true, 123456, 'test-user-fingerprint')");
+        $conn->exec("INSERT INTO verification (uuid, type, identity, confirmed, code, user_fingerprint, created_at) VALUES ('". Uuid::uuid5(Uuid::NAMESPACE_OID, UlidService::generate())."', 'email', 'test@test.com', true, 123456, 'test-user-fingerprint', NOW())");
     }
 
     public function down(Schema $schema): void

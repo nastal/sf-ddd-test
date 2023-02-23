@@ -7,5 +7,5 @@ use App\Verification\Domain\Aggregate\Verification;
 interface VerificationRepositoryInterface
 {
     public function save(Verification $verification): void;
-    public function findBySubjectIdentity(string $identity): ?Verification;
+    public function findPendingIdentity(string $identity): ?array;
 }
