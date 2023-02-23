@@ -4,6 +4,7 @@ namespace App\Verification\Domain\Aggregate;
 
 use App\Shared\Domain\Entity\Type;
 use App\Shared\Domain\Service\UlidService;
+use DateTimeZone;
 
 class Verification
 {
@@ -27,7 +28,7 @@ class Verification
         $this->confirmed = $confirmed;
         $this->code = $code;
         $this->userFingerprint = $userFingerprint;
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable('now', new DateTimeZone('UTC'));
     }
 
     public function getSubject(): Subject
@@ -55,20 +56,25 @@ class Verification
         return $this->confirmed;
     }
 
+    public function setConfirmed(bool $confirmed = true): void
+    {
+        $this->confirmed = $confirmed;
+    }
+
     public function getUserFingerprint(): UserFingerprint
     {
         return $this->userFingerprint;
     }
 
-    public function setConfirmed(bool $confirmed): self
-    {
-        $this->confirmed = $confirmed;
-        return $this;
-    }
-
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

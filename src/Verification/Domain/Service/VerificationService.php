@@ -3,6 +3,9 @@
 namespace App\Verification\Domain\Service;
 
 use App\Verification\Domain\Aggregate\Verification;
+use App\Verification\Domain\Exception\ValidationFailedException;
+use App\Verification\Domain\Exception\VerificationAlreadyConfirmedException;
+use App\Verification\Domain\Exception\VerificationExpiredException;
 use App\Verification\Domain\Repository\VerificationRepositoryInterface;
 
 class VerificationService
@@ -28,6 +31,33 @@ class VerificationService
 
     }
 
+    public function confirm(Verification $verification, int $code): void
+    {
+
+        if ($verification->isConfirmed()) {
+            throw new VerificationAlreadyConfirmedException('Verification already confirmed');
+        }
+
+        $expirationTime = new \DateTimeImmutable('-5 minutes');
+
+        if ($verification->getCreatedAt() <= $expirationTime) {
+            throw new VerificationExpiredException('Verification expired');
+        }
+
+        if ($verification->getInvalidAttempts() >= $verification->getMaxInvalidAttempts()) {
+            throw new ValidationFailedException('No permission to confirm verification');
+        }
+
+        if ($verification->getCode()->getCode() !== $code) {
+            $this->incrementInvalidAttempts($verification->getUuid());
+            throw new ValidationFailedException('Invalid code');
+        }
+
+        $verification->setConfirmed();
+
+        $this->verificationRepository->confirm($verification->getUuid());
+    }
+
     private function activePendingVerification(Verification $verification): bool
     {
         $verification = $this->verificationRepository->findPendingIdentity(
@@ -35,5 +65,10 @@ class VerificationService
             $verification->getMaxInvalidAttempts()
         );
         return count($verification) > 0;
+    }
+
+    private function incrementInvalidAttempts(string $uuid): void
+    {
+        $this->verificationRepository->incrementInvalidAttempts($uuid);
     }
 }

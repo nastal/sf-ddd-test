@@ -38,6 +38,7 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
         $doctrineVerification->setUuid($entity->getUuid());
         $doctrineVerification->setCreatedAt($entity->getCreatedAt());
         $doctrineVerification->setIp($entity->getUserFingerprint()->getIp());
+        $doctrineVerification->setCreatedAt($entity->getCreatedAt());
 
         $this->getEntityManager()->persist($doctrineVerification);
         $this->getEntityManager()->flush();
@@ -58,5 +59,50 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
             ->setParameter('expirationTime', $expirationTime);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function get(string $uuid): ?Verification
+    {
+        $doctrineVerification = $this->findOneBy(['uuid' => $uuid]);
+        if(!$doctrineVerification) {
+            return null;
+        }
+
+        $verification = new Verification(
+            new Subject(
+                $doctrineVerification->getIdentity(),
+                Type::from($doctrineVerification->getType())
+            ),
+            new Code($doctrineVerification->getCode()),
+            new UserFingerprint(
+                $doctrineVerification->getUserFingerprint(),
+                $doctrineVerification->getIp()
+            ),
+            $doctrineVerification->isConfirmed()
+        );
+
+        $verification->setUuid($doctrineVerification->getUuid());
+        $verification->setCreatedAt($doctrineVerification->getCreatedAt());
+        $verification->setInvalidAttempts($doctrineVerification->getInvalidAttempts());
+
+        return $verification;
+    }
+
+    public function confirm(string $uuid): void
+    {
+        $doctrineVerification = $this->findOneBy(['uuid' => $uuid]);
+        if ($doctrineVerification) {
+            $doctrineVerification->setConfirmed(true);
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function incrementInvalidAttempts(string $uuid): void
+    {
+        $doctrineVerification = $this->findOneBy(['uuid' => $uuid]);
+        if ($doctrineVerification) {
+            $doctrineVerification->setInvalidAttempts($doctrineVerification->getInvalidAttempts() + 1);
+            $this->getEntityManager()->flush();
+        }
     }
 }

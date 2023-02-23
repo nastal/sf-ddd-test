@@ -10,6 +10,7 @@ use App\Verification\Domain\Aggregate\UserFingerprint;
 use App\Verification\Domain\Aggregate\Verification;
 use App\Verification\Domain\Event\VerificationCreatedEvent;
 use App\Verification\Domain\Service\VerificationService;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -30,6 +31,8 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
             new Code(random_int(100000, 99999999)), //fixme use generator
             new UserFingerprint($command->getUserAgent(), $command->getIp())
         );
+
+        $verification->setUuid(Uuid::uuid4());
 
         $this->verificationService->createVerification($verification);
 

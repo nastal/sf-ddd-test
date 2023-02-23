@@ -4,7 +4,6 @@ namespace App\Verification\Infrastructure\Doctrine\Entity;
 
 use App\Verification\Infrastructure\Doctrine\Repository\VerificationRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: VerificationRepository::class)]
 #[ORM\Table(name: 'verification')]
@@ -69,7 +68,7 @@ class DoctrineVerification
         return $this;
     }
 
-    public function getUuid(): Uuid
+    public function getUuid(): string
     {
         return $this->uuid;
     }

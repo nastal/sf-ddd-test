@@ -10,4 +10,4 @@ Eric Evans - Domain Driven Design... Sorry, no)) Have not read it yet. But I wil
 ]()
 
 
-create app within gotify and replace token in .env file
+create app within gotify and replace token in .env file X_GOTIFY_KEY=new_token

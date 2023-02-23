@@ -12,6 +12,7 @@ framework:
         routing:
             # Route your messages to the transports
             'App\Verification\Application\Command\CreateVerificationCommand': sync
+            'App\Verification\Application\Command\ConfirmVerificationCommand': sync
             'App\Verification\Domain\Event\VerificationCreatedEvent': async
             'App\Notification\Application\Command\CreateNotificationCommand': async
             'App\Notification\Application\Command\DispatchNotificationCommand': async
