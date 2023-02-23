@@ -32,11 +32,12 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
         $doctrineVerification = new DoctrineVerification();
         $doctrineVerification->setType($entity->getType()->value);
         $doctrineVerification->setCode($entity->getCode()->getCode());
-        $doctrineVerification->setUserFingerprint($entity->getUserFingerprint()->getUserFingerprint());
+        $doctrineVerification->setUserFingerprint($entity->getUserFingerprint()->getUserAgent());
         $doctrineVerification->setIdentity($entity->getIdentity());
         $doctrineVerification->setConfirmed($entity->isConfirmed());
         $doctrineVerification->setUuid($entity->getUuid());
         $doctrineVerification->setCreatedAt($entity->getCreatedAt());
+        $doctrineVerification->setIp($entity->getUserFingerprint()->getIp());
 
         $this->getEntityManager()->persist($doctrineVerification);
         $this->getEntityManager()->flush();

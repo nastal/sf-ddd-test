@@ -10,7 +10,8 @@ class CreateVerificationCommand implements CommandInterface
     public function __construct(
         public readonly string $identity,
         public readonly string $type,
-        public readonly string $userFingerprint
+        public readonly string $userAgent,
+        public readonly string $ip,
     )
     {
     }
@@ -30,10 +31,14 @@ class CreateVerificationCommand implements CommandInterface
         return $this->type;
     }
 
-    public function getUserFingerprint(): string
+    public function getUserAgent(): string
     {
-        return $this->userFingerprint;
+        return $this->userAgent;
     }
 
+    public function getIp(): string
+    {
+        return $this->ip;
+    }
 
 }

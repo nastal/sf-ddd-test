@@ -5,12 +5,18 @@ namespace App\Verification\Domain\Aggregate;
 class UserFingerprint
 {
     public function __construct(
-        private ?string $userFingerprint
+        private ?string $userAgent,
+        private ?string $ip,
     ) {
     }
 
-    public function getUserFingerprint(): ?string
+    public function getUserAgent(): ?string
     {
-        return $this->userFingerprint;
+        return $this->userAgent;
+    }
+
+    public function getIp(): ?string
+    {
+        return $this->ip;
     }
 }

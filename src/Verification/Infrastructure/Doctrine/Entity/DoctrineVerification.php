@@ -34,6 +34,9 @@ class DoctrineVerification
     private ?string $userFingerprint = null;
 
     #[ORM\Column]
+    private ?string $ip_address = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
@@ -107,6 +110,17 @@ class DoctrineVerification
     public function setUserFingerprint(string $userFingerprint): self
     {
         $this->userFingerprint = $userFingerprint;
+        return $this;
+    }
+
+    public function getIp(): ?string
+    {
+        return $this->ip_address;
+    }
+
+    public function setIp(string $ip): self
+    {
+        $this->ip_address = $ip;
         return $this;
     }
 

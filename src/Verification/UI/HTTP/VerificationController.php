@@ -25,7 +25,8 @@ class VerificationController extends AbstractController
         $command = new CreateVerificationCommand(
             $content['identity'],
             $content['type'],
-            $request->headers->get('User-Agent')
+            $request->headers->get('User-Agent'),
+            $request->getClientIp()
         );
 
         try {

@@ -3,7 +3,6 @@
 namespace App\Verification\Application\Command;
 
 use App\Shared\Application\Command\CommandHandlerInterface;
-use App\Shared\Application\Command\CommandInterface;
 use App\Shared\Domain\Entity\Type;
 use App\Verification\Domain\Aggregate\Code;
 use App\Verification\Domain\Aggregate\Subject;
@@ -29,7 +28,7 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
         $verification = new Verification(
             new Subject($command->getIdentity(), Type::from($command->getType())),
             new Code(random_int(10000000, 99999999)), //fixme use generator
-            new UserFingerprint($command->getUserFingerprint())
+            new UserFingerprint($command->getUserAgent(), $command->getIp())
         );
 
         $this->verificationService->createVerification($verification);
