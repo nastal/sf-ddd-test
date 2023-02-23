@@ -19,7 +19,7 @@ class ConfirmVerificationHandler
     {
     }
 
-    public function __invoke(ConfirmVerificationCommand $command): int
+    public function __invoke(ConfirmVerificationCommand $command): void
     {
 
         $verification = $this->repository->get($command->getVerificationUuid());

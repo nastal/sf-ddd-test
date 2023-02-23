@@ -32,11 +32,11 @@ class CreateVerificationCommandHandler implements CommandHandlerInterface
             new UserFingerprint($command->getUserAgent(), $command->getIp())
         );
 
-        $verification->setUuid(Uuid::uuid4());
-
         $this->verificationService->createVerification($verification);
 
         $this->eventDispatcher->dispatch(new VerificationCreatedEvent($verification));
+
+        return $verification->getUuid();
 
     }
 }

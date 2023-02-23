@@ -5,6 +5,7 @@ namespace App\Verification\Domain\Service;
 use App\Verification\Domain\Aggregate\Verification;
 use App\Verification\Domain\Exception\ValidationFailedException;
 use App\Verification\Domain\Exception\VerificationAlreadyConfirmedException;
+use App\Verification\Domain\Exception\VerificationException;
 use App\Verification\Domain\Exception\VerificationExpiredException;
 use App\Verification\Domain\Repository\VerificationRepositoryInterface;
 
@@ -20,13 +21,13 @@ class VerificationService
 
         //It must not be possible to create a duplicated "pending" verification for the same subject.
         if($this->activePendingVerification($verification)) {
-            throw new \DomainException('Pending verification exists');
+            throw new VerificationException('Pending verification exists');
         }
 
         try {
             $this->verificationRepository->save($verification);
         } catch (\Exception $e) {
-            throw new \Exception('Verification cant be created');
+            throw new VerificationException('Verification cant be created');
         }
 
     }

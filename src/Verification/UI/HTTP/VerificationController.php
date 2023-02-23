@@ -2,6 +2,7 @@
 
 namespace App\Verification\UI\HTTP;
 
+use App\Shared\Domain\Entity\Type;
 use App\Verification\Application\Command\ConfirmVerificationCommand;
 use App\Verification\Application\Command\CreateVerificationCommand;
 use App\Verification\Domain\Exception\ValidationFailedException;
@@ -11,9 +12,12 @@ use App\Verification\Domain\Exception\VerificationNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,8 +33,39 @@ class VerificationController extends AbstractController
     #[Route('/verification', name: 'verification', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        //todo validate request
+        // validate request body
         $content = json_decode($request->getContent(), true)['subject'];
+        $type = $content['type'];
+        $identity = $content['identity'];
+
+        $violations = $this->validator->validate($type, [
+            new Assert\NotBlank(),
+            new Assert\Choice(['choices' => [Type::Email->value, Type::Mobile->value]]),
+        ]);
+
+        if (count($violations) === 0) {
+            if ($type === Type::Email->value) {
+                $violations = $this->validator->validate($identity, [
+                    new Assert\NotBlank(),
+                    new Assert\Email(),
+                ]);
+            } else {
+                $violations = $this->validator->validate($identity, [
+                    new Assert\NotBlank(),
+                    new Regex(['pattern' => '/^\+?\d+$/']),
+                ]);
+            }
+        }
+
+        if (count($violations) > 0) {
+            return $this->json([
+                'message' => 'Validation failed',
+                'errors' => [
+                    'type' => $violations->get(0)->getMessage(),
+                ],
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         $command = new CreateVerificationCommand(
             $content['identity'],
             $content['type'],
@@ -39,16 +74,16 @@ class VerificationController extends AbstractController
         );
 
         try {
-            $this->messageBus->dispatch($command); //sync
-        } catch (\Exception $e) {
-            return $this->json(['message' => $e->getMessage()], 409);
+            $envelope = $this->messageBus->dispatch($command); //sync
+            $handledStamp = $envelope->last(HandledStamp::class);
+            $verificationUuid = $handledStamp->getResult();
+        } catch (HandlerFailedException $e) {
+            $exception = $e->getPrevious();
+            return $this->json(['message' => $exception->getMessage()], 409);
         }
 
         return $this->json([
-            'identity' => $content['identity'],
-            'type' => $content['type'],
-            'ip' => $request->getClientIp(),
-            'userAgent' => $request->headers->get('User-Agent'),
+            'id' => $verificationUuid,
         ], 201);
     }
 

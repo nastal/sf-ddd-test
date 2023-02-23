@@ -5,6 +5,7 @@ namespace App\Verification\Domain\Aggregate;
 use App\Shared\Domain\Entity\Type;
 use App\Shared\Domain\Service\UlidService;
 use DateTimeZone;
+use Ramsey\Uuid\Uuid;
 
 class Verification
 {
@@ -23,7 +24,7 @@ class Verification
 
     public function __construct(Subject $subject, Code $code, UserFingerprint $userFingerprint, bool $confirmed = false)
     {
-        $this->uuid = UlidService::generate();
+        $this->uuid = Uuid::uuid4();
         $this->subject = $subject;
         $this->confirmed = $confirmed;
         $this->code = $code;
