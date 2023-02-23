@@ -61,11 +61,11 @@ class VerificationService
 
     private function activePendingVerification(Verification $verification): bool
     {
-        $verification = $this->verificationRepository->findPendingIdentity(
+        $pendingVerifications = $this->verificationRepository->findPendingIdentity(
             $verification->getSubject()->getIdentity(),
             $verification->getMaxInvalidAttempts()
         );
-        return count($verification) > 0;
+        return count($pendingVerifications) > 0;
     }
 
     private function incrementInvalidAttempts(string $uuid): void

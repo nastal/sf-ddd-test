@@ -58,7 +58,7 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
             ->setParameter('maxInvalidAttempts', $maxInvalidAttempts)
             ->setParameter('expirationTime', $expirationTime);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult() ?? [];
     }
 
     public function get(string $uuid): ?Verification
