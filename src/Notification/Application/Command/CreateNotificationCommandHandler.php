@@ -49,7 +49,8 @@ class CreateNotificationCommandHandler
 
         $this->messageBus->dispatch(new DispatchNotificationCommand(
             $id,
-            $NotificationChannel
+            $NotificationChannel,
+            $command->getCode()
         ));
 
     }

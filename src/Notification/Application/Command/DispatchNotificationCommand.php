@@ -9,6 +9,7 @@ class DispatchNotificationCommand
     public function __construct(
         public readonly int $id,
         public readonly Channel $channel,
+        public readonly string $code
     )
     {
     }
@@ -26,5 +27,13 @@ class DispatchNotificationCommand
     public function getChannel(): Channel
     {
         return $this->channel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
     }
 }
