@@ -14,13 +14,20 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[AsMessageHandler]
 class DispatchNotificationCommandHandler
 {
+
+    private string $gotifyXtoken;
+    private string $gotifyHost;
     public function __construct(
         private readonly NotificationService $notificationService,
         private readonly LoggerInterface $logger,
         private readonly MailerInterface $mailer, // added dependency for Swift Mailer
-        private readonly HttpClientInterface $httpClient // added dependency for HTTP client
+        private readonly HttpClientInterface $httpClient, // added dependency for HTTP client
+        $gotifyXtoken,
+        $gotifyHost
     )
     {
+        $this->gotifyXtoken = $gotifyXtoken;
+        $this->gotifyHost = $gotifyHost;
     }
 
     public function __invoke(DispatchNotificationCommand $command): void
@@ -64,7 +71,7 @@ class DispatchNotificationCommandHandler
             ->from('no-reply@example.com')
             ->to($notification->getRecipient())
             ->subject('Notification code')
-            ->text('Your verification code is: ' . $code) //fixme use template
+            ->text('Your verification code is: ' . $code)
             ->html($notification->getBody());
 
         $this->mailer->send($email);
@@ -76,13 +83,19 @@ class DispatchNotificationCommandHandler
         $template = $notification->getBody();
 
         $this->logger->info("Sending SMS to {$notification->getRecipient()} with template: {$template}");
-        /*$response = $this->httpClient->request(
+        $response = $this->httpClient->request(
             'POST',
-            'http://gotify/server/send-sms', // fixme move to env
+            $this->gotifyHost,
             [
                 'json' => [
-                    'recipient' => $recipient,
-                    'message' => $body
+                    'extras' => [
+                        'recipient' => $notification->getRecipient()
+                    ],
+                    'recipient' => $notification->getRecipient(),
+                    'message' => $notification->getBody()
+                ],
+                'headers' => [
+                    'X-Gotify-Key' => $this->gotifyXtoken,
                 ]
             ]
         );
@@ -91,6 +104,7 @@ class DispatchNotificationCommandHandler
             $this->logger->info("SMS sent for notification id: {$notification->getId()}");
         } else {
             $this->logger->error("Failed to send SMS for notification id: {$notification->getId()}");
-        }*/
+            throw new \Exception("Failed to send SMS for notification id: {$notification->getId()}");
+        }
     }
 }
