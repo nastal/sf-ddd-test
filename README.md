@@ -1,4 +1,4 @@
-#Home task implementation
+# Home task implementation
 
 1. clone this repository
 2. ensure that you have installed docker and docker-compose
