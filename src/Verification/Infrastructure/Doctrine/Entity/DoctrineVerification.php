@@ -36,6 +36,9 @@ class DoctrineVerification
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column]
+    private ?int $invalidAttempts = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -115,6 +118,17 @@ class DoctrineVerification
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getInvalidAttempts(): ?int
+    {
+        return $this->invalidAttempts;
+    }
+
+    public function setInvalidAttempts(int $invalidAttempts): self
+    {
+        $this->invalidAttempts = $invalidAttempts;
         return $this;
     }
 

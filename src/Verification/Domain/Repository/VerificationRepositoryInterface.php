@@ -7,5 +7,5 @@ use App\Verification\Domain\Aggregate\Verification;
 interface VerificationRepositoryInterface
 {
     public function save(Verification $verification): void;
-    public function findPendingIdentity(string $identity): ?array;
+    public function findPendingIdentity(string $identity, int $maxInvalidAttempts): ?array;
 }

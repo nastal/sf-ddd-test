@@ -16,6 +16,10 @@ class Verification
     //created at property
     private \DateTimeImmutable $createdAt;
 
+    private int $invalidAttempts = 0;
+
+    private int $maxInvalidAttempts = 5;
+
     public function __construct(Subject $subject, Code $code, UserFingerprint $userFingerprint, bool $confirmed = false)
     {
         $this->uuid = UlidService::generate();
@@ -76,5 +80,21 @@ class Verification
     {
         $this->createdAt = $createdAt;
         return $this;
+    }
+
+    public function getInvalidAttempts(): int
+    {
+        return $this->invalidAttempts;
+    }
+
+    public function setInvalidAttempts(int $invalidAttempts): self
+    {
+        $this->invalidAttempts = $invalidAttempts;
+        return $this;
+    }
+
+    public function getMaxInvalidAttempts(): int
+    {
+        return $this->maxInvalidAttempts;
     }
 }

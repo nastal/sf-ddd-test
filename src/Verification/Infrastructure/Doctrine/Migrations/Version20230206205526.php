@@ -29,6 +29,7 @@ final class Version20230206205526 extends AbstractMigration
         $table->addColumn('code', 'integer', ['notnull' => false]);
         $table->addColumn('user_fingerprint', 'string', ['notnull' => false]);
         $table->addColumn('created_at', 'datetime', ['notnull' => true, 'default' => 'CURRENT_TIMESTAMP']);
+        $table->addColumn('invalid_attempts', 'integer', ['unsigned' => true, 'default' => 0]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['identity', 'type']);
     }
@@ -36,7 +37,7 @@ final class Version20230206205526 extends AbstractMigration
     public function postUp(Schema $schema): void
     {
         $conn = $this->connection;
-        $conn->exec("INSERT INTO verification (uuid, type, identity, confirmed, code, user_fingerprint, created_at) VALUES ('". Uuid::uuid5(Uuid::NAMESPACE_OID, UlidService::generate())."', 'email', 'test@test.com', true, 123456, 'test-user-fingerprint', NOW())");
+        $conn->exec("INSERT INTO verification (uuid, type, identity, confirmed, code, user_fingerprint, created_at, invalid_attempts) VALUES ('". Uuid::uuid5(Uuid::NAMESPACE_OID, UlidService::generate())."', 'email', 'test@test.com', true, 123456, 'test-user-fingerprint', NOW(), 0)");
     }
 
     public function down(Schema $schema): void

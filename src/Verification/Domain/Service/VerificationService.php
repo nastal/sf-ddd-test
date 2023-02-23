@@ -28,9 +28,12 @@ class VerificationService
 
     }
 
-    public function activePendingVerification(Verification $verification): bool
+    private function activePendingVerification(Verification $verification): bool
     {
-        $verification = $this->verificationRepository->findPendingIdentity($verification->getSubject()->getIdentity());
+        $verification = $this->verificationRepository->findPendingIdentity(
+            $verification->getSubject()->getIdentity(),
+            $verification->getMaxInvalidAttempts()
+        );
         return count($verification) > 0;
     }
 }

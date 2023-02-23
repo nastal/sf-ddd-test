@@ -43,15 +43,17 @@ class VerificationRepository extends ServiceEntityRepository implements Verifica
 
     }
 
-    public function findPendingIdentity(string $identity): ?array
+    public function findPendingIdentity(string $identity, int $maxInvalidAttempts): ?array
     {
         $expirationTime = new \DateTimeImmutable('-5 minutes');
 
         $qb = $this->createQueryBuilder('v')
             ->where('v.identity = :identity')
             ->andWhere('v.confirmed = false')
+            ->andWhere('v.invalidAttempts < :maxInvalidAttempts')
             ->andWhere('v.createdAt >= :expirationTime')
             ->setParameter('identity', $identity)
+            ->setParameter('maxInvalidAttempts', $maxInvalidAttempts)
             ->setParameter('expirationTime', $expirationTime);
 
         return $qb->getQuery()->getResult();
