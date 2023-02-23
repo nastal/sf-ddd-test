@@ -4,9 +4,13 @@ namespace App\Notification\Domain\Aggregate;
 
 class NotificationChannelMapper
 {
+
+    public const SMS = 'sms-verification';
+    public const EMAIL = 'email-verification';
+
     private const TEMPLATE_MAP = [
-        'mobile_confirmation' => ['slug' => 'sms-verification', 'name' => 'Mobile Confirmation'],
-        'email_confirmation' => ['slug' => 'email-verification', 'name' => 'Email Confirmation'],
+        'mobile_confirmation' => ['slug' => self::SMS, 'name' => 'Mobile Confirmation'],
+        'email_confirmation' => ['slug' => self::EMAIL, 'name' => 'Email Confirmation'],
     ];
 
     public function mapSlugToTemplate(string $slug): Channel

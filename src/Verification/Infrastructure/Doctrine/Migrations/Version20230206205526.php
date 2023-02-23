@@ -9,9 +9,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 use Ramsey\Uuid\Uuid;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
+
 final class Version20230206205526 extends AbstractMigration
 {
     public function getDescription(): string

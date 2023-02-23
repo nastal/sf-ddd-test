@@ -12,8 +12,18 @@ class NotificationService
     ) {
     }
 
-    public function createNotification(Notification $notification): void
+    public function createNotification(Notification $notification): int
     {
-        $this->notificationRepository->save($notification);
+        return $this->notificationRepository->save($notification);
+    }
+
+    public function getNotification(int $id): Notification
+    {
+        return $this->notificationRepository->getNotification($id);
+    }
+
+    public function dispatch(Notification $notification): void
+    {
+        $this->notificationRepository->dispatch($notification);
     }
 }

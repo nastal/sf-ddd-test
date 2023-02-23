@@ -54,4 +54,9 @@ class Notification
     {
         $this->dispatched = $dispatched;
     }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

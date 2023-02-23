@@ -2,6 +2,7 @@
 
 namespace App\Notification\Infrastructure\Doctrine\Repository;
 
+use App\Notification\Domain\Aggregate\Channel;
 use App\Notification\Domain\Aggregate\Notification;
 use App\Notification\Domain\Repository\NotificationRepositoryInterface;
 use App\Notification\Infrastructure\Doctrine\Entity\DoctrineNotification;
@@ -15,7 +16,7 @@ class NotificationRepository extends ServiceEntityRepository implements Notifica
         parent::__construct($registry, DoctrineNotification::class);
     }
 
-    public function save(Notification $notification): void
+    public function save(Notification $notification): int
     {
         $doctrineNotification = new DoctrineNotification(
             $notification->getRecipient(),
@@ -24,11 +25,25 @@ class NotificationRepository extends ServiceEntityRepository implements Notifica
         );
         $this->_em->persist($doctrineNotification);
         $this->_em->flush();
+        return $doctrineNotification->getId();
+    }
+
+    public function getNotification(int $id): Notification
+    {
+        $doctrineNotification = $this->find($id);
+        $notification = new Notification(
+            $doctrineNotification->getRecipient(),
+            new Channel($doctrineNotification->getChannel()),
+            $doctrineNotification->getBody(),
+        );
+        $notification->setId($doctrineNotification->getId());
+        return $notification;
     }
 
     public function dispatch(Notification $notification): void
     {
-        $notification->setDispatched(true);
+        $doctrineNotification = $this->find($notification->getId());
+        $doctrineNotification->setDispatched($notification->isDispatched());
         $this->_em->flush();
     }
 }

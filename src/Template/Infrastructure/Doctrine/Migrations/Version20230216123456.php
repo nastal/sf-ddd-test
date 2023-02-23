@@ -6,7 +6,6 @@ namespace App\Template\Infrastructure\Doctrine\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use App\Shared\Domain\Entity\Type;
 
 final class Version20230216123456 extends AbstractMigration
 {

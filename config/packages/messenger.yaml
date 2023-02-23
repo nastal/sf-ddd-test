@@ -14,6 +14,7 @@ framework:
             'App\Verification\Application\Command\CreateVerificationCommand': sync
             'App\Verification\Domain\Event\VerificationCreatedEvent': async
             'App\Notification\Application\Command\CreateNotificationCommand': async
+            'App\Notification\Application\Command\DispatchNotificationCommand': async
 
 # when@test:
 #    framework:

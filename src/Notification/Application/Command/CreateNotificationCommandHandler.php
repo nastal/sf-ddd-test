@@ -6,6 +6,7 @@ use App\Notification\Domain\Aggregate\Notification;
 use App\Notification\Domain\Aggregate\NotificationChannelMapper;
 use App\Notification\Domain\Service\NotificationService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Psr\Log\LoggerInterface;
 
@@ -17,6 +18,7 @@ class CreateNotificationCommandHandler
         private readonly NotificationService $notificationService,
         private readonly HttpClientInterface $client,
         private readonly LoggerInterface $logger,
+        private readonly MessageBusInterface $messageBus,
         private readonly NotificationChannelMapper $notificationChannelMapper
     )
     {
@@ -42,8 +44,13 @@ class CreateNotificationCommandHandler
             $template
         );
 
-        $this->notificationService->createNotification($notification);
+        $id = $this->notificationService->createNotification($notification);
         //send notification
+
+        $this->messageBus->dispatch(new DispatchNotificationCommand(
+            $id,
+            $NotificationChannel
+        ));
 
     }
 
