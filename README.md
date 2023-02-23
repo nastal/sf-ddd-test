@@ -29,4 +29,4 @@
 -   [CodelyTV PHP DDD Example](https://github.com/CodelyTV/php-ddd-example)
 -   [DDD and Symfony Tutorial](https://www.youtube.com/watch?v=pfMGgd_NDPc&ab_channel=GrUSP)
 -   A lot of articles on DDD and Symfony can be found via Google.
--   _Domain-Driven Design: Tackling Complexity in the Heart of Software_ by Eric Evans (recommended reading)enter code here
+-   _Domain-Driven Design: Tackling Complexity in the Heart of Software_ by Eric Evans (not read it yet, but I will)
